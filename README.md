@@ -3,3 +3,5 @@
 
 WPF框架，MVVM风格
 SQLite3数据库
+
+通过LINQ to SQL方式来筛选数据

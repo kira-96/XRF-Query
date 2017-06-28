@@ -1,0 +1,142 @@
+﻿<Page x:Class="X射线荧光分析查询软件.View.搜索页"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:v="clr-namespace:X射线荧光分析查询软件.View"
+      xmlns:conv="clr-namespace:X射线荧光分析查询软件.Converter"
+      mc:Ignorable="d" 
+      d:DesignWidth="720"
+      d:DesignHeight="300" 
+      DataContext="{Binding Source={StaticResource Locator}, Path=Search}">
+
+    <Page.Resources>
+        <conv:RadioConverter x:Key="RadioConv" />
+        <Style x:Key="查询按钮" TargetType="{x:Type Button}" BasedOn="{StaticResource Segoe}">
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="DodgerBlue" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ButtonBorder"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              Margin="{TemplateBinding Padding}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="SkyBlue" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="DeepSkyBlue" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="分类按钮" TargetType="{x:Type RadioButton}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="10 0" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalAlignment}" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Content="{TemplateBinding Content}" />
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#76EEC6" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="#48D1CC" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="视图按钮" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource Segoe}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Margin" Value="2 0" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <Border x:Name="BackgroundBorder">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              Content="{TemplateBinding Content}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#76EEC6" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="#48D1CC" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <StackPanel x:Name="LayoutRoot" Background="White" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Margin="0 2">
+            <RadioButton GroupName="搜索分类" Content="原子序数" Style="{StaticResource 分类按钮}" 
+                         IsChecked="{Binding 分类, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RadioConv}, ConverterParameter=0}" />
+            <TextBlock Text="/" FontSize="18" Foreground="LightGray" />
+            <RadioButton GroupName="搜索分类" Content="元素名称" Style="{StaticResource 分类按钮}" 
+                         IsChecked="{Binding 分类, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RadioConv}, ConverterParameter=1}" />
+            <TextBlock Text="/" FontSize="18" Foreground="LightGray" />
+            <RadioButton GroupName="搜索分类" Content="元素符号" Style="{StaticResource 分类按钮}" 
+                         IsChecked="{Binding 分类, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RadioConv}, ConverterParameter=2}" />
+            <TextBlock Text="/" FontSize="18" Foreground="LightGray" />
+            <RadioButton GroupName="搜索分类" Content="能量" Style="{StaticResource 分类按钮}" 
+                         IsChecked="{Binding 分类, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RadioConv}, ConverterParameter=3}" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0 2">
+            <TextBox Text="{Binding QueryString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                     FontSize="20" Width="360" Height="36"
+                     VerticalContentAlignment="Center">
+                <TextBox.InputBindings>
+                    <KeyBinding Gesture="Enter" Command="{Binding QueryCommand}" />
+                </TextBox.InputBindings>
+            </TextBox>
+            <!--
+            <Button Content="&#xE1A3;" Width="36" FontSize="20" Style="{StaticResource 查询按钮}" Command="{Binding QueryCommand}" />
+            -->
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="2">
+            <RadioButton GroupName="显示分类" Content="&#xE71D;" Style="{StaticResource 视图按钮}" 
+                         ToolTip="列表视图"
+                         IsChecked="{Binding 视图, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RadioConv}, ConverterParameter=列表}" />
+            <RadioButton GroupName="显示分类" Content="&#xE80A;" Style="{StaticResource 视图按钮}" 
+                         ToolTip="表格视图"
+                         IsChecked="{Binding 视图, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RadioConv}, ConverterParameter=表格}" />
+        </StackPanel>
+    </StackPanel>
+</Page>

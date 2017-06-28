@@ -1,0 +1,65 @@
+﻿<Page x:Class="X射线荧光分析查询软件.View.表格视图"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignWidth="300"
+      d:DesignHeight="300"
+      DataContext="{Binding Source={StaticResource Locator}, Path=Screen}">
+
+    <Page.Resources>
+        <Style x:Key="TransButton" TargetType="{x:Type Button}" BasedOn="{StaticResource Segoe}">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Margin" Value="6 0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="2" />
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="DeepSkyBlue" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="DodgerBlue" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="&#xE12E;" 
+                    Command="{Binding SizeUpCommand}"
+                    Style="{StaticResource TransButton}" 
+                    ToolTip="字号+" />
+            <Button Content="&#xE1A4;" 
+                    Command="{Binding SizeDownCommand}"
+                    Style="{StaticResource TransButton}" 
+                    ToolTip="字号-" />
+        </StackPanel>
+        <DataGrid x:Name="数据网格"
+                  Grid.Row="1"
+                  FontSize="{Binding 字号}"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  AutoGenerateColumns="True"
+                  ItemsSource="{Binding QueryResult}" />
+    </Grid>
+</Page>

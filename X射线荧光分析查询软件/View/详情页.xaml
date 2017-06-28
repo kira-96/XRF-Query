@@ -1,0 +1,252 @@
+﻿<Page x:Class="X射线荧光分析查询软件.View.详情页"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:conv="clr-namespace:X射线荧光分析查询软件.Converter"
+      mc:Ignorable="d" 
+      d:DesignWidth="500"
+      d:DesignHeight="500"
+      DataContext="{Binding Source={StaticResource Locator}, Path=Screen}">
+
+    <Page.Resources>
+        <conv:DataConverter x:Key="DataConv" />
+        <Style x:Key="TextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="2" />
+        </Style>
+        <Style x:Key="TextBorder" TargetType="{x:Type Border}">
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        <Style x:Key="TransButton" TargetType="{x:Type Button}" BasedOn="{StaticResource Segoe}">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#00BFFF" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Margin" Value="6 0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="2" />
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#33ccff" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="DodgerBlue" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="5">
+            <Button Content="&#xE112;" 
+                    HorizontalAlignment="Left" 
+                    ToolTip="返回"
+                    Command="{Binding BackCommand}"
+                    Style="{StaticResource TransButton}" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" x:Name="MainPanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0"
+                  Grid.Row="0"
+                  Grid.RowSpan="2"
+                  Background="DeepSkyBlue"
+                  Margin="2"
+                  Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding 选定元素.序数}"
+                           FontSize="18"
+                           Foreground="White" />
+                    <TextBlock Grid.Row="0" Grid.Column="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding 选定元素.符号}"
+                           FontSize="18"
+                           Foreground="White" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                               HorizontalAlignment="Center"
+                               Text="{Binding 选定元素.拼音}"
+                               FontSize="16"
+                               Foreground="White" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{Binding 选定元素.名称}"
+                           FontSize="36"
+                           Foreground="White" />
+                </Grid>
+                <StackPanel Grid.Row="0" Grid.Column="1" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Stretch" 
+                        Background="#CD2990"
+                        Margin="2">
+                    <TextBlock Text="英文名称:" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.英文名称}" Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Stretch"
+                        Background="#48D1CC"
+                        Margin="2">
+                    <TextBlock Text="电子构型:" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.电子排布}" 
+                               Style="{StaticResource TextStyle}" />
+                </StackPanel>
+            </Grid>
+            <StackPanel Grid.Row="1" Grid.Column="1" 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left"
+                        Background="#DB7093"
+                        Margin="2">
+                <TextBlock Text="密度(标准温度压力下)(g/cm³):" Style="{StaticResource TextStyle}" />
+                <TextBlock Text="{Binding 选定元素.密度, Converter={StaticResource DataConv}}" 
+                               Style="{StaticResource TextStyle}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <StackPanel Background="#7A67EE" Margin="2" ToolTip="质量吸收系数μ1">
+                    <TextBlock Text="μ1(cm²/g)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.μ1, Converter={StaticResource DataConv}}"
+                           Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#7A67EE" Margin="2" ToolTip="质量吸收系数μ2">
+                    <TextBlock Text="μ2(cm²/g)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.μ2, Converter={StaticResource DataConv}}"
+                           Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#7A67EE" Margin="2" ToolTip="μ1/μ2">
+                    <TextBlock Text="μ1/μ2" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.μ1比μ2, Converter={StaticResource DataConv}}"
+                           Style="{StaticResource TextStyle}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <StackPanel Background="#EE3A8C" Margin="2">
+                    <TextBlock Text="Kα1(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.Kα1能量,Converter={StaticResource DataConv}}"
+                           Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#EE3A8C" Margin="2">
+                    <TextBlock Text="Kα2(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.Kα2能量,Converter={StaticResource DataConv}}"
+                           Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#EE3A8C" Margin="2">
+                    <TextBlock Text="Kβ1(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.Kβ1能量,Converter={StaticResource DataConv}}"
+                           Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#EE3A8C" Margin="2">
+                    <TextBlock Text="Kβ2(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.Kβ2能量,Converter={StaticResource DataConv}}"
+                           Style="{StaticResource TextStyle}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <StackPanel Background="#43CD80" Margin="2">
+                    <TextBlock Text="Kα平均(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.Kα平均值, Converter={StaticResource DataConv}}"
+                           Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#43CD80" Margin="2">
+                    <TextBlock Text="Kab(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.K吸收限能量, Converter={StaticResource DataConv}}"
+                           Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#43CD80" Margin="2">
+                    <TextBlock Text="荧光产额ωK" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.ωK, Converter={StaticResource DataConv}}"
+                           Style="{StaticResource TextStyle}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <StackPanel Background="#FF69B4" Margin="2">
+                    <TextBlock Text="LI(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.LI, Converter={StaticResource DataConv}}"
+                               Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#FF69B4" Margin="2">
+                    <TextBlock Text="LII(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.LII, Converter={StaticResource DataConv}}"
+                               Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#FF69B4" Margin="2">
+                    <TextBlock Text="LIII(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.LIII, Converter={StaticResource DataConv}}"
+                               Style="{StaticResource TextStyle}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <StackPanel Background="#1E90FF" Margin="2">
+                    <TextBlock Text="Lα1(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.Lα1能量, Converter={StaticResource DataConv}}"
+                               Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#1E90FF" Margin="2">
+                    <TextBlock Text="Lα2(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.Lα2能量, Converter={StaticResource DataConv}}"
+                               Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#1E90FF" Margin="2">
+                    <TextBlock Text="Lβ1(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.Lβ1能量, Converter={StaticResource DataConv}}"
+                               Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#1E90FF" Margin="2">
+                    <TextBlock Text="Lβ2(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.Lβ2能量, Converter={StaticResource DataConv}}"
+                               Style="{StaticResource TextStyle}" />
+                </StackPanel>
+                <StackPanel Background="#1E90FF" Margin="2">
+                    <TextBlock Text="Lγ1(keV)" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.Lγ1能量, Converter={StaticResource DataConv}}"
+                               Style="{StaticResource TextStyle}" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <StackPanel Background="#FF34B3" Margin="2">
+                    <TextBlock Text="荧光产额ωL" Style="{StaticResource TextStyle}" />
+                    <TextBlock Text="{Binding 选定元素.ωL, Converter={StaticResource DataConv}}"
+                               Style="{StaticResource TextStyle}" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

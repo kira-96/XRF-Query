@@ -80,6 +80,7 @@
         </Style>
     </Page.Resources>
 
+    <!--
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
@@ -88,6 +89,7 @@
             <i:InvokeCommandAction Command="{Binding UnloadedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
+    -->
     
     <Grid x:Name="RootGrid" Background="White">
         <TextBlock x:Name="NoResult" 

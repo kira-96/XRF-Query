@@ -22,7 +22,9 @@
         private Table<Element> _Elements;
         private Element _选定元素;
         private double _字号 = 18;
-        public ObservableCollection<Element> QueryResult { get; private set; }
+        private ObservableCollection<Element> _QueryResult = new ObservableCollection<Element>();
+
+        public ObservableCollection<Element> QueryResult => _QueryResult;
 
         /// <summary>
         /// 当前列表中选定的元素
@@ -56,10 +58,11 @@
             }
         }
 
-        private RelayCommand _LoadedCommand, _UnloadedCommand, _BackCommand, _SizeUpCommand, _SizeDownCommand;
-
-        public RelayCommand LoadedCommand => _LoadedCommand ?? (_LoadedCommand = new RelayCommand(Loaded));
-        public RelayCommand UnloadedCommand => _UnloadedCommand ?? (_UnloadedCommand = new RelayCommand(Unloaded));
+        private RelayCommand _BackCommand, _SizeUpCommand, _SizeDownCommand;
+        // 2017.07.14 Removed Here
+        // private RelayCommand _LoadedCommand, _UnloadedCommand;
+        // public RelayCommand LoadedCommand => _LoadedCommand ?? (_LoadedCommand = new RelayCommand(Loaded));
+        // public RelayCommand UnloadedCommand => _UnloadedCommand ?? (_UnloadedCommand = new RelayCommand(Unloaded));
 
         //
         public RelayCommand BackCommand => _BackCommand ?? (_BackCommand = new RelayCommand(() => 
@@ -91,6 +94,10 @@
                 }
                 _Elements = elements;
             });
+            // 2017.07.14
+            显示全部元素();
+            // 2017.07.14 Messenger Moved Here
+            Messenger.Default.Register<NotificationMessage<int>>(this, QueryToken, Query);
             /*
             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(Environment.CurrentDirectory + "\\log.txt"))
             {
@@ -100,19 +107,20 @@
                 }
             }
             */
-            QueryResult = new ObservableCollection<Element>();
         }
 
+        /*
         private void Loaded()
         {
             Messenger.Default.Register<NotificationMessage<int>>(this, QueryToken, Query);
-            显示全部元素();
+            // 显示全部元素();
         }
 
         private void Unloaded()
         {
             Messenger.Default.Unregister<NotificationMessage>(this, QueryToken);
         }
+        */
 
         /// <summary>
         /// 查询函数
@@ -189,7 +197,7 @@
                         }
                         else
                         {
-                            QueryResult.Clear();
+                            _QueryResult.Clear();
                             Messenger.Default.Send(false, View.列表视图.LayoutToken);
                         }
                         break;
@@ -205,7 +213,7 @@
         /// <param name="elements">筛选后的数据列表</param>
         private void UpdateQueryResult(IEnumerable<Element> elements)
         {
-            QueryResult.Clear();
+            _QueryResult.Clear();
             if (elements.Count() == 0)
             {
                 // 显示错误
@@ -214,7 +222,7 @@
             }
             foreach (Element e in elements)
             {
-                QueryResult.Add(e);
+                _QueryResult.Add(e);
             }
             Messenger.Default.Send(true, View.列表视图.LayoutToken);
         }
@@ -279,7 +287,8 @@
 
         public override void Cleanup()
         {
-            Unloaded();
+            // Unregister Messenger Here
+            Messenger.Default.Unregister<NotificationMessage>(this, QueryToken);
             base.Cleanup();
         }
     }

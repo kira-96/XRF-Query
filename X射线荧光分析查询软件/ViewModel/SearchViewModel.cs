@@ -48,6 +48,8 @@
             set
             {
                 Set(ref _分类, value);
+                // 2017.07.14 新增
+                QueryString = string.Empty;
                 /*
                 switch (value)
                 {

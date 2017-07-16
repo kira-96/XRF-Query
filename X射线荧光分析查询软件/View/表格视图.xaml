@@ -20,17 +20,21 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <ContentPresenter Content="{TemplateBinding Content}"
+                        <Border x:Name="BackBorder" Background="Transparent" BorderThickness="0">
+                            <ContentPresenter Content="{TemplateBinding Content}"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           Margin="2" />
+                        </Border>
 
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Foreground" Value="DeepSkyBlue" />
+                                <Setter TargetName="BackBorder" Property="Background" Value="#1A005080" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter Property="Foreground" Value="DodgerBlue" />
+                                <Setter TargetName="BackBorder" Property="Background" Value="#1E005080" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -45,14 +49,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="&#xE12E;" 
+            <Button Content="&#xE1C7;" 
                     Command="{Binding SizeUpCommand}"
                     Style="{StaticResource TransButton}" 
-                    ToolTip="字号+" />
-            <Button Content="&#xE1A4;" 
+                    ToolTip="字体+" />
+            <Button Content="&#xE1C6;" 
                     Command="{Binding SizeDownCommand}"
                     Style="{StaticResource TransButton}" 
-                    ToolTip="字号-" />
+                    ToolTip="字体-" />
         </StackPanel>
         <DataGrid x:Name="数据网格"
                   Grid.Row="1"

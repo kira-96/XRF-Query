@@ -193,7 +193,8 @@
                                                        (e.Lβ2能量 >= min && e.Lβ2能量 <= max) ||
                                                        (e.Lγ1能量 >= min && e.Lγ1能量 <= max)
                                                        select e;
-                            UpdateQueryResult(ele);
+                            // UpdateQueryResult(ele);
+                            UpdateQueryResultAndAddTag(ele, min, max);
                         }
                         else
                         {
@@ -225,6 +226,82 @@
                 _QueryResult.Add(e);
             }
             Messenger.Default.Send(true, View.列表视图.LayoutToken);
+        }
+
+        /// <summary>
+        /// 更新视图列表并显示匹配能量
+        /// 2017.07.22
+        /// </summary>
+        /// <param name="elements">筛选后的数据列表</param>
+        /// <param name="min">最小能量</param>
+        /// <param name="max">最大能量</param>
+        private void UpdateQueryResultAndAddTag(IEnumerable<Element> elements, double min, double max)
+        {
+            _QueryResult.Clear();
+            if (elements.Count() == 0)
+            {
+                // 显示错误
+                Messenger.Default.Send(false, View.列表视图.LayoutToken);
+                return;
+            }
+            foreach (Element e in elements)
+            {
+                string tag = "";
+                if (e.K吸收限能量 >= min && e.K吸收限能量 <= max)
+                {
+                    tag += " Kab: " + e.K吸收限能量;
+                }
+                if (e.Kα1能量 >= min && e.Kα1能量 <= max)
+                {
+                    tag += " Kα1: " + e.Kα1能量;
+                }
+                if (e.Kα2能量 >= min && e.Kα2能量 <= max)
+                {
+                    tag += " Kα2: " + e.Kα2能量;
+                }
+                if (e.Kβ1能量 >= min && e.Kβ1能量 <= max)
+                {
+                    tag += " Kβ1: " + e.Kβ1能量;
+                }
+                if (e.Kβ2能量 >= min && e.Kβ2能量 <= max)
+                {
+                    tag += " Kβ2: " + e.Kβ2能量;
+                }
+                if (e.LI >= min && e.LI <= max)
+                {
+                    tag += " LI: " + e.LI;
+                }
+                if (e.LII >= min && e.LII <= max)
+                {
+                    tag += " LII: " + e.LII;
+                }
+                if (e.LIII >= min && e.LIII <= max)
+                {
+                    tag += " LIII: " + e.LIII;
+                }
+                if (e.Lα1能量 >= min && e.Lα1能量 <= max)
+                {
+                    tag += " Lα1: " + e.Lα1能量;
+                }
+                if (e.Lα2能量 >= min && e.Lα2能量 <= max)
+                {
+                    tag += " Lα2: " + e.Lα2能量;
+                }
+                if (e.Lβ1能量 >= min && e.Lβ1能量 <= max)
+                {
+                    tag += " Lβ1: " + e.Lβ1能量;
+                }
+                if (e.Lβ2能量 >= min && e.Lβ2能量 <= max)
+                {
+                    tag += " Lβ2: " + e.Lβ2能量;
+                }
+                if (e.Lγ1能量 >= min && e.Lγ1能量 <= max)
+                {
+                    tag += " Lγ1:" + e.Lγ1能量;
+                }
+                e.Tag = tag;
+                _QueryResult.Add(e);
+            }
         }
 
         /// <summary>

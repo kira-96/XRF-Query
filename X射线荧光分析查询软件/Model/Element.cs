@@ -75,6 +75,20 @@
         [Column(Name = "ωL")]
         public double ωL { get; set; }
 
+        /// <summary>
+        /// <see cref="Tag"/>
+        /// </summary>
+        private string _Tag = string.Empty;
+
+        /// <summary>
+        /// 显示能量信息
+        /// </summary>
+        public string Tag
+        {
+            get => _Tag;
+            set { _Tag = value; }
+        }
+
 
         private double Kα有效平均值()
         {

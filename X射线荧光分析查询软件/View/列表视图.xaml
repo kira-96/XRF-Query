@@ -42,6 +42,10 @@
                                FontSize="20" />
                     <TextBlock Text=")"
                                FontSize="20" />
+                    <TextBlock Text="{Binding Tag}"
+                               FontSize="12"
+                               Margin="6 0"
+                               VerticalAlignment="Bottom" />
                 </StackPanel>
             </Grid>
         </DataTemplate>
@@ -62,13 +66,16 @@
                                 Padding="{TemplateBinding Padding}">
                             <StackPanel Orientation="Horizontal">
                                 <Rectangle x:Name="rect" Margin="0 0 6 0" Width="6" />
-                                <ContentPresenter Margin="0"
-                                                  ContentTemplate="{StaticResource 元素模板}"
-                                                  Content="{TemplateBinding Content}" />
+                                <Border x:Name="ContentBorder" Background="Transparent">
+                                    <ContentPresenter Margin="0"
+                                                      ContentTemplate="{StaticResource 元素模板}"
+                                                      Content="{TemplateBinding Content}" />
+                                </Border>
                             </StackPanel>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContentBorder" Property="Background" Value="#12005080" />
                                 <Setter TargetName="rect" Property="Fill" Value="DeepSkyBlue" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">

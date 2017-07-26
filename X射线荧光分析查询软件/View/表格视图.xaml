@@ -61,6 +61,7 @@
         <DataGrid x:Name="数据网格"
                   Grid.Row="1"
                   FontSize="{Binding 字号}"
+                  IsReadOnly="True"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   AutoGenerateColumns="True"

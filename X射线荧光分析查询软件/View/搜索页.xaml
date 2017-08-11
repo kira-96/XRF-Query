@@ -49,7 +49,7 @@
         </Style>
         <Style x:Key="分类按钮" TargetType="{x:Type RadioButton}">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="18" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Margin" Value="10 0" />
@@ -63,10 +63,10 @@
                                           Content="{TemplateBinding Content}" />
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="#76EEC6" />
+                                <Setter Property="Foreground" Value="DeepSkyBlue" />
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="Foreground" Value="#48D1CC" />
+                                <Setter Property="Foreground" Value="DodgerBlue" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -76,7 +76,7 @@
 
         <Style x:Key="视图按钮" TargetType="{x:Type RadioButton}" BasedOn="{StaticResource Segoe}">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="Gray" />
+            <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="16" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Margin" Value="2 0" />
@@ -92,10 +92,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Foreground" Value="#76EEC6" />
+                                <Setter Property="Foreground" Value="DeepSkyBlue" />
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="Foreground" Value="#48D1CC" />
+                                <Setter Property="Foreground" Value="DodgerBlue" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -104,7 +104,7 @@
         </Style>
     </Page.Resources>
 
-    <StackPanel x:Name="LayoutRoot" Background="White" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <StackPanel x:Name="LayoutRoot" Background="Transparent" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
         <StackPanel Orientation="Horizontal" Margin="0 2">
             <RadioButton GroupName="搜索分类" Content="原子序数" Style="{StaticResource 分类按钮}" 
                          IsChecked="{Binding 分类, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RadioConv}, ConverterParameter=0}" />

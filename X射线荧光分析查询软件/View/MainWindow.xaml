@@ -8,16 +8,86 @@
         mc:Ignorable="d ignore"
         Width="560"
         Height="600"
+        MinWidth="360"
+        MinHeight="360"
         Icon="../Resources/icon.png"
         Title="X射线荧光分析查询软件"
+        WindowStyle="None"
+        AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResizeWithGrip">
+        SizeChanged="Window_SizeChanged">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="关闭按钮" TargetType="{x:Type Button}" BasedOn="{StaticResource Segoe}">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="Gray" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Width" Value="20" />
+                <Setter Property="Height" Value="20" />
+                <Setter Property="Margin" Value="3 0" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="BackBorder" CornerRadius="3" 
+                                    Width="18" Height="18"
+                                    Background="Transparent" BorderThickness="0">
+                                <ContentPresenter Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="2" />
+                            </Border>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter TargetName="BackBorder" Property="Background" Value="Red" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter TargetName="BackBorder" Property="Background" Value="FireBrick" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="透明按钮" TargetType="{x:Type Button}" BasedOn="{StaticResource Segoe}">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="Gray" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="Width" Value="20" />
+                <Setter Property="Height" Value="20" />
+                <Setter Property="Margin" Value="3 0" />
+                <Setter Property="Cursor" Value="Hand" />
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="2" />
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Foreground" Value="WhiteSmoke" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -37,12 +107,28 @@
             <RowDefinition x:Name="Row1" Height="Auto" />
             <RowDefinition x:Name="Row2" Height="*" />
         </Grid.RowDefinitions>
-        <Frame Grid.Row="0" 
-               x:Name="SearchPage" 
-               Source="搜索页.xaml" 
-               Visibility="Visible" 
-               NavigationUIVisibility="Hidden" />
+        <Grid Grid.Row="0">
+            <Grid.Background>
+                <ImageBrush ImageSource="../Resources/back.png" Stretch="UniformToFill" />
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="关于" ToolTip="关于" Content="&#xE11B;" Style="{StaticResource 透明按钮}" Click="关于_Click" />
+                <Button x:Name="最小化" ToolTip="最小化" Content="&#xE921;" Style="{StaticResource 透明按钮}" Click="最小化_Click" />
+                <Button x:Name="最大化" ToolTip="最大化" Content="&#xE92D;" Style="{StaticResource 透明按钮}" Click="最大化_Click" />
+                <Button x:Name="关闭" ToolTip="关闭" Content="&#xE8BB;" Style="{StaticResource 关闭按钮}" Click="关闭_Click" />
+            </StackPanel>
+            <Frame Grid.Row="1" 
+                   x:Name="SearchPage" 
+                   Source="搜索页.xaml" 
+                   Visibility="Visible" 
+                   NavigationUIVisibility="Hidden" />
+        </Grid>
         <Frame Grid.Row="1" 
+               Padding="1 0 1 1"
                x:Name="NavigationFrame" 
                Visibility="Visible"
                NavigationUIVisibility="Hidden" />

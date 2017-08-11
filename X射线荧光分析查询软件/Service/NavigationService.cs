@@ -55,8 +55,7 @@
                 {
                     throw new ArgumentException($"No such page: {pageKey}", nameof(pageKey));
                 }
-                Frame frame = GetDescendantFromName(Application.Current.MainWindow, "NavigationFrame") as Frame;
-                if (frame != null)
+                if (GetDescendantFromName(Application.Current.MainWindow, "NavigationFrame") is Frame frame)
                 {
                     frame.Source = _PagesByKey[pageKey];
                     // frame.Navigate(_PagesByKey[pageKey]);

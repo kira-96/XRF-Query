@@ -106,6 +106,7 @@
                    VerticalAlignment="Center" 
                    Visibility="Collapsed" />
         <ListView x:Name="ResultViewer" 
+                  BorderThickness="0"
                   SelectedItem="{Binding 选定元素}"
                   ItemsSource="{Binding QueryResult}"
                   ItemContainerStyle="{StaticResource 列表Item样式}"

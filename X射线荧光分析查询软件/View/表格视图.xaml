@@ -60,6 +60,7 @@
         </StackPanel>
         <DataGrid x:Name="数据网格"
                   Grid.Row="1"
+                  BorderThickness="0"
                   FontSize="{Binding 字号}"
                   IsReadOnly="True"
                   CanUserAddRows="False"

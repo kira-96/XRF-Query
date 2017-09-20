@@ -17,6 +17,7 @@
     {
         public static readonly Guid QueryToken = Guid.NewGuid();
         public INavigationService Nav => ServiceLocator.Current.GetInstance<INavigationService>();
+        public IDialogService dialog => ServiceLocator.Current.GetInstance<IDialogService>();
         private readonly IDataService _dataService;
         
         private Table<Element> _Elements;
@@ -90,13 +91,19 @@
             {
                 if (error != null)
                 {
-                    return;
+                    dialog.ShowError(error, "Error", "OK", () =>
+                    {
+                        elements = null;
+                    });
+                    // return;
                 }
                 _Elements = elements;
             });
-            // 2017.07.14
-            显示全部元素();
-            // 2017.07.14 Messenger Moved Here
+            if (_Elements != null)
+            {
+                显示全部元素();
+            }
+            // Messenger Moved Here
             Messenger.Default.Register<NotificationMessage<int>>(this, QueryToken, Query);
             /*
             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(Environment.CurrentDirectory + "\\log.txt"))
@@ -130,6 +137,10 @@
         {
             int 分类 = parameter.Content;
             string QueryString = parameter.Notification;
+            if (_Elements == null)
+            {
+                return;
+            }
             if (String.IsNullOrEmpty(QueryString))
             {
                 显示全部元素();

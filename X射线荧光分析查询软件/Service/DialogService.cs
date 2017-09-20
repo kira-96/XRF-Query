@@ -14,7 +14,9 @@
 
         public Task ShowError(Exception error, string title, string buttonText, Action afterHideCallback)
         {
-            throw new NotImplementedException();
+            MessageBox.Show(error.Message, title, MessageBoxButton.OK);
+            afterHideCallback?.Invoke();
+            return null;
         }
 
         public Task ShowMessage(string message, string title)

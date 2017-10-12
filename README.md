@@ -11,6 +11,8 @@
 - 2017.10.12 更新
 
   更新CommonServiceLocator至2.01，替换了MvvmLight内的SimpleIoc为IoC
+  
+  更新了SQLite的驱动
 
 - 2017.09.20 更新
 

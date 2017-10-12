@@ -8,6 +8,10 @@
 
 ## 更新
 
+- 2017.10.12 更新
+
+  更新CommonServiceLocator至2.01，替换了MvvmLight内的SimpleIoc为IoC
+
 - 2017.09.20 更新
 
   添加了数据库丢失时启动程序的错误处理

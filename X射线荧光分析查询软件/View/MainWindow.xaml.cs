@@ -1,9 +1,9 @@
 ﻿namespace X射线荧光分析查询软件.View
 {
+    using CommonServiceLocator;
     using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Messaging;
     using GalaSoft.MvvmLight.Views;
-    using Microsoft.Practices.ServiceLocation;
     using System;
     using System.Windows;
     using System.Windows.Input;

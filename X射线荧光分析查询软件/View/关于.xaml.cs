@@ -1,10 +1,8 @@
 ﻿namespace X射线荧光分析查询软件.View
 {
-    using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
     using System;
     using System.Windows;
-    using System.Windows.Media;
 
     /// <summary>
     /// 关于.xaml 的交互逻辑

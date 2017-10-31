@@ -8,6 +8,10 @@
 
 ## 更新
 
+- 2017.10.31 更新
+  
+  syntax fixed
+
 - 2017.10.12 更新
 
   更新CommonServiceLocator至2.01，替换了MvvmLight内的SimpleIoc为IoC

@@ -11,28 +11,27 @@
     using System.Data.Linq;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using X射线荧光分析查询软件.Model;
+    using Model;
 
     public class ScreenViewModel : ViewModelBase
     {
         public static readonly Guid QueryToken = Guid.NewGuid();
-        public INavigationService Nav => ServiceLocator.Current.GetInstance<INavigationService>();
-        public IDialogService dialog => ServiceLocator.Current.GetInstance<IDialogService>();
-        private readonly IDataService _dataService;
-        
-        private Table<Element> _Elements;
+        private readonly INavigationService _nav = ServiceLocator.Current.GetInstance<INavigationService>();
+        private readonly IDialogService _dialog = ServiceLocator.Current.GetInstance<IDialogService>();
+
+        private Table<Element> _elements;
         private Element _选定元素;
         private double _字号 = 18;
-        private ObservableCollection<Element> _QueryResult = new ObservableCollection<Element>();
+        private readonly ObservableCollection<Element> _queryResult = new ObservableCollection<Element>();
 
-        public ObservableCollection<Element> QueryResult => _QueryResult;
+        public ObservableCollection<Element> QueryResult => _queryResult;
 
         /// <summary>
         /// 当前列表中选定的元素
         /// </summary>
         public Element 选定元素
         {
-            get { return _选定元素; }
+            get => _选定元素;
             set
             {
                 Set(ref _选定元素, value);
@@ -50,7 +49,7 @@
         /// </summary>
         public double 字号
         {
-            get { return _字号; }
+            get => _字号;
             set
             {
                 Set(ref _字号, value);
@@ -59,24 +58,19 @@
             }
         }
 
-        private RelayCommand _BackCommand, _SizeUpCommand, _SizeDownCommand;
-        // 2017.07.14 Removed Here
-        // private RelayCommand _LoadedCommand, _UnloadedCommand;
-        // public RelayCommand LoadedCommand => _LoadedCommand ?? (_LoadedCommand = new RelayCommand(Loaded));
-        // public RelayCommand UnloadedCommand => _UnloadedCommand ?? (_UnloadedCommand = new RelayCommand(Unloaded));
-
-        //
-        public RelayCommand BackCommand => _BackCommand ?? (_BackCommand = new RelayCommand(() => 
+        private RelayCommand _backCommand, _sizeUpCommand, _sizeDownCommand;
+        
+        public RelayCommand BackCommand => _backCommand ?? (_backCommand = new RelayCommand(() => 
         {
             Messenger.Default.Send(false, View.MainWindow.LayoutToken);
-            Nav.GoBack();
+            _nav.GoBack();
         }));
 
         /// <summary>
         /// 改变字号
         /// </summary>
-        public RelayCommand SizeUpCommand => _SizeUpCommand ?? (_SizeUpCommand = new RelayCommand(FontSizeUp, CanFontSizeUp));
-        public RelayCommand SizeDownCommand => _SizeDownCommand ?? (_SizeDownCommand = new RelayCommand(FontSizeDown, CanFontSizeDown));
+        public RelayCommand SizeUpCommand => _sizeUpCommand ?? (_sizeUpCommand = new RelayCommand(FontSizeUp, CanFontSizeUp));
+        public RelayCommand SizeDownCommand => _sizeDownCommand ?? (_sizeDownCommand = new RelayCommand(FontSizeDown, CanFontSizeDown));
 
         /// <summary>
         /// 构造方法
@@ -86,20 +80,19 @@
         /// <param name="dataService">DataService, 见ViewModelLocator 和 Model.DataService</param>
         public ScreenViewModel(IDataService dataService)
         {
-            _dataService = dataService;
-            _dataService.GetData((elements, error) =>
+            dataService.GetData((elements, error) =>
             {
                 if (error != null)
                 {
-                    dialog.ShowError(error, "Error", "OK", () =>
+                    _dialog.ShowError(error, "Error", "OK", () =>
                     {
                         elements = null;
                     });
                     // return;
                 }
-                _Elements = elements;
+                _elements = elements;
             });
-            if (_Elements != null)
+            if (_elements != null)
             {
                 显示全部元素();
             }
@@ -136,12 +129,12 @@
         private void Query(NotificationMessage<int> parameter)
         {
             int 分类 = parameter.Content;
-            string QueryString = parameter.Notification;
-            if (_Elements == null)
+            string queryString = parameter.Notification;
+            if (_elements == null)
             {
                 return;
             }
-            if (String.IsNullOrEmpty(QueryString))
+            if (string.IsNullOrEmpty(queryString))
             {
                 显示全部元素();
                 return;
@@ -160,36 +153,36 @@
                             UpdateQueryResult(ele);
                         }
                         */
-                        IEnumerable<Element> ele = from e in _Elements.AsEnumerable()
-                                                   where e.序数.ToString().Contains(QueryString)
+                        IEnumerable<Element> ele = from e in _elements.AsEnumerable()
+                                                   where e.序数.ToString().Contains(queryString)
                                                    select e;
                         UpdateQueryResult(ele);
                         break;
                     }
                 case 1:
                     {
-                        IEnumerable<Element> ele = from e in _Elements.AsEnumerable()
-                                                   where e.名称 == QueryString || 
-                                                   RegExp(e.拼音).ToUpper().Contains(QueryString.ToUpper())
+                        IEnumerable<Element> ele = from e in _elements.AsEnumerable()
+                                                   where e.名称 == queryString || 
+                                                   RegExp(e.拼音).ToUpper().Contains(queryString.ToUpper())
                                                    select e;
                         UpdateQueryResult(ele);
                         break;
                     }
                 case 2:
                     {
-                        IEnumerable<Element> ele = from e in _Elements.AsEnumerable()
-                                                   where e.符号.ToUpper().Contains(QueryString.ToUpper())
+                        IEnumerable<Element> ele = from e in _elements.AsEnumerable()
+                                                   where e.符号.ToUpper().Contains(queryString.ToUpper())
                                                    select e;
                         UpdateQueryResult(ele);
                         break;
                     }
                 case 3:
                     {
-                        if (double.TryParse(QueryString, out double Erg))
+                        if (double.TryParse(queryString, out double erg))
                         {
-                            double min = 0.95 * Erg;
-                            double max = 1.05 * Erg;
-                            IEnumerable<Element> ele = from e in _Elements.AsEnumerable()
+                            double min = 0.95 * erg;
+                            double max = 1.05 * erg;
+                            IEnumerable<Element> ele = from e in _elements.AsEnumerable()
                                                        where (e.Kα1能量 >= min && e.Kα1能量 <= max) || 
                                                        (e.Kα2能量 >= min && e.Kα2能量 <= max) || 
                                                        (e.Kβ1能量 >= min && e.Kβ1能量 <= max) ||
@@ -209,13 +202,11 @@
                         }
                         else
                         {
-                            _QueryResult.Clear();
+                            _queryResult.Clear();
                             Messenger.Default.Send(false, View.列表视图.LayoutToken);
                         }
                         break;
                     }
-                default:
-                    break;
             }
         }
 
@@ -225,16 +216,17 @@
         /// <param name="elements">筛选后的数据列表</param>
         private void UpdateQueryResult(IEnumerable<Element> elements)
         {
-            _QueryResult.Clear();
-            if (elements.Count() == 0)
+            _queryResult.Clear();
+            IList<Element> enumerable = elements as IList<Element> ?? elements.ToList();
+            if (!enumerable.Any())
             {
                 // 显示错误
                 Messenger.Default.Send(false, View.列表视图.LayoutToken);
                 return;
             }
-            foreach (Element e in elements)
+            foreach (Element e in enumerable)
             {
-                _QueryResult.Add(e);
+                _queryResult.Add(e);
             }
             Messenger.Default.Send(true, View.列表视图.LayoutToken);
         }
@@ -248,14 +240,15 @@
         /// <param name="max">最大能量</param>
         private void UpdateQueryResultAndAddTag(IEnumerable<Element> elements, double min, double max)
         {
-            _QueryResult.Clear();
-            if (elements.Count() == 0)
+            _queryResult.Clear();
+            IList<Element> enumerable = elements as IList<Element> ?? elements.ToList();
+            if (!enumerable.Any())
             {
                 // 显示错误
                 Messenger.Default.Send(false, View.列表视图.LayoutToken);
                 return;
             }
-            foreach (Element e in elements)
+            foreach (Element e in enumerable)
             {
                 string tag = "";
                 if (e.K吸收限能量 >= min && e.K吸收限能量 <= max)
@@ -311,7 +304,7 @@
                     tag += " Lγ1:" + e.Lγ1能量;
                 }
                 e.Tag = tag;
-                _QueryResult.Add(e);
+                _queryResult.Add(e);
             }
         }
 
@@ -320,7 +313,7 @@
         /// </summary>
         private void 显示详细信息()
         {
-            Nav.NavigateTo(nameof(View.详情页));
+            _nav.NavigateTo(nameof(View.详情页));
         }
 
         /// <summary>
@@ -328,7 +321,7 @@
         /// </summary>
         private void 显示全部元素()
         {
-            IEnumerable<Element> ele = from e in _Elements.AsEnumerable()
+            IEnumerable<Element> ele = from e in _elements.AsEnumerable()
                                        select e;
             UpdateQueryResult(ele);
         }
@@ -358,7 +351,7 @@
         /// </summary>
         /// <param name="input">输入的字符串</param>
         /// <returns>替换后的字符串</returns>
-        private string RegExp(string input)
+        private static string RegExp(string input)
         {
             string s = input;
             string[] matchs = { "[āáǎà]", "[ōóǒò]", "[ēéěè]", "[īíǐì]", "[ūúǔù]", "[ǖǘǚǜü]" };

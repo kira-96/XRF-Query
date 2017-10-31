@@ -8,7 +8,7 @@
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
-    using X射线荧光分析查询软件.ViewModel;
+    using ViewModel;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -19,12 +19,12 @@
         public INavigationService Nav => ServiceLocator.Current.GetInstance<INavigationService>();
         public SearchViewModel Search => ServiceLocator.Current.GetInstance<SearchViewModel>();
 
-        private bool isMaximize = false;
-        private Rect restoreRect;
+        private bool _isMaximize = false;
+        private Rect _restoreRect;
 
-        private RelayCommand _EscapeCommand;
+        private RelayCommand _escapeCommand;
 
-        public RelayCommand EscapeCommand => _EscapeCommand ?? (_EscapeCommand = new RelayCommand(OnEscape));
+        public RelayCommand EscapeCommand => _escapeCommand ?? (_escapeCommand = new RelayCommand(OnEscape));
 
         /// <summary>
         /// Initializes a new instance of the MainWindow class.
@@ -83,20 +83,16 @@
         /// </summary>
         private void OnEscape()
         {
-            if (Nav.CurrentPageKey.Equals(nameof(详情页)))
-            {
-                Nav.GoBack();
-                OnMsg(false);
-                // Search.Set视图("列表");
-                // return;
-            }
+            if (!Nav.CurrentPageKey.Equals(nameof(详情页))) return;
+            Nav.GoBack();
+            OnMsg(false);
         }
 
         private void Window_SizeChanged(object s, SizeChangedEventArgs e)
         {
             Rect rect = new Rect(e.NewSize);
             RectangleGeometry rg = new RectangleGeometry(rect, 6, 6);
-            (s as UIElement).Clip = rg;
+            ((UIElement) s).Clip = rg;
         }
 
         private void 关于_Click(object sender, RoutedEventArgs e)
@@ -111,25 +107,25 @@
 
         private void 最大化_Click(object sender, RoutedEventArgs e)
         {
-            if (isMaximize)
+            if (_isMaximize)
             {
-                Left = restoreRect.X;
-                Top = restoreRect.Y;
-                Width = restoreRect.Width;
-                Height = restoreRect.Height;
-                isMaximize = false;
+                Left = _restoreRect.X;
+                Top = _restoreRect.Y;
+                Width = _restoreRect.Width;
+                Height = _restoreRect.Height;
+                _isMaximize = false;
             }
             else
             {
-                restoreRect = new Rect(Left, Top, Width, Height);
+                _restoreRect = new Rect(Left, Top, Width, Height);
                 Left = SystemParameters.WorkArea.X;
                 Top = SystemParameters.WorkArea.Y;
                 Width = SystemParameters.WorkArea.Width;
                 Height = SystemParameters.WorkArea.Height;
-                isMaximize = true;
+                _isMaximize = true;
             }
-            最大化.Content = isMaximize ? "\xE92C" : "\xE92D";
-            最大化.ToolTip = isMaximize ? "还原" : "最大化";
+            最大化.Content = _isMaximize ? "\xE92C" : "\xE92D";
+            最大化.ToolTip = _isMaximize ? "还原" : "最大化";
         }
 
         private void 关闭_Click(object sender, RoutedEventArgs e)

@@ -11,35 +11,28 @@
 
     public class NavigationService : ViewModelBase, INavigationService
     {
-        private readonly Dictionary<string, Uri> _PagesByKey;
-        private readonly List<string> _Historic;
-        private string _CurrentPageKey;
+        private readonly Dictionary<string, Uri> _pagesByKey;
+        private readonly List<string> _historic;
+        private string _currentPageKey;
         public object Parameter { get; private set; }
 
         public NavigationService()
         {
-            _PagesByKey = new Dictionary<string, Uri>();
-            _Historic = new List<string>();
+            _pagesByKey = new Dictionary<string, Uri>();
+            _historic = new List<string>();
         }
 
         public string CurrentPageKey
         {
-            get { return _CurrentPageKey; }
-            private set
-            {
-                // _CurrentPageKey = value;
-                // RaisePropertyChanged(() => CurrentPageKey);
-                Set(ref _CurrentPageKey, value);
-            }
+            get => _currentPageKey;
+            private set => Set(ref _currentPageKey, value);
         }
 
         public void GoBack()
         {
-            if (_Historic.Count > 1)
-            {
-                _Historic.Remove(_Historic.Last());
-                NavigateTo(_Historic.Last(), "Back");
-            }
+            if (_historic.Count <= 1) return;
+            _historic.Remove(_historic.Last());
+            NavigateTo(_historic.Last(), "Back");
         }
 
         public void NavigateTo(string pageKey)
@@ -49,21 +42,21 @@
 
         public virtual void NavigateTo(string pageKey, object parameter)
         {
-            lock (_PagesByKey)
+            lock (_pagesByKey)
             {
-                if (!_PagesByKey.ContainsKey(pageKey))
+                if (!_pagesByKey.ContainsKey(pageKey))
                 {
                     throw new ArgumentException($"No such page: {pageKey}", nameof(pageKey));
                 }
                 if (GetDescendantFromName(Application.Current.MainWindow, "NavigationFrame") is Frame frame)
                 {
-                    frame.Source = _PagesByKey[pageKey];
+                    frame.Source = _pagesByKey[pageKey];
                     // frame.Navigate(_PagesByKey[pageKey]);
                 }
                 Parameter = parameter;
                 if (parameter.ToString().Equals("Next"))
                 {
-                    _Historic.Add(pageKey);
+                    _historic.Add(pageKey);
                 }
                 CurrentPageKey = pageKey;
             }
@@ -71,15 +64,15 @@
 
         public void Configure(string key, Uri pageType)
         {
-            lock (_PagesByKey)
+            lock (_pagesByKey)
             {
-                if (_PagesByKey.ContainsKey(key))
+                if (_pagesByKey.ContainsKey(key))
                 {
-                    _PagesByKey[key] = pageType;
+                    _pagesByKey[key] = pageType;
                 }
                 else
                 {
-                    _PagesByKey.Add(key, pageType);
+                    _pagesByKey.Add(key, pageType);
                 }
             }
         }

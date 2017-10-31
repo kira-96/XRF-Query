@@ -17,9 +17,9 @@ namespace X射线荧光分析查询软件.ViewModel
     using GalaSoft.MvvmLight.Views;
     using System;
     using IoC;
-    using X射线荧光分析查询软件.Model;
-    using X射线荧光分析查询软件.Service;
-    using X射线荧光分析查询软件.View;
+    using Model;
+    using Service;
+    using View;
 
     /// <summary>
     /// This class contains static references to all the view models in the

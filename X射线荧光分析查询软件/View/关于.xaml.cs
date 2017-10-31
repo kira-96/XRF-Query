@@ -9,14 +9,14 @@
     /// </summary>
     public partial class 关于 : Window
     {
-        private RelayCommand _CloseCommand;
+        private RelayCommand _closeCommand;
 
-        public RelayCommand CloseCommand => _CloseCommand ?? (_CloseCommand = new RelayCommand(CloseWindow));
+        public RelayCommand CloseCommand => _closeCommand ?? (_closeCommand = new RelayCommand(CloseWindow));
         
         public 关于()
         {
             InitializeComponent();
-            this.DataContext = this;
+            DataContext = this;
             GetVersion();
         }
 

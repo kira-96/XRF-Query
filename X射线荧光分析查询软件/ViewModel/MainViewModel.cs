@@ -1,7 +1,6 @@
 ﻿namespace X射线荧光分析查询软件.ViewModel
 {
     using GalaSoft.MvvmLight;
-    using X射线荧光分析查询软件.Model;
 
     /// <summary>
     /// This class contains properties that the main View can data bind to.

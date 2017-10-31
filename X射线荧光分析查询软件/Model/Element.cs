@@ -78,15 +78,15 @@
         /// <summary>
         /// <see cref="Tag"/>
         /// </summary>
-        private string _Tag = string.Empty;
+        private string _tag = string.Empty;
 
         /// <summary>
         /// 显示能量信息
         /// </summary>
         public string Tag
         {
-            get => _Tag;
-            set { _Tag = value; }
+            get => _tag;
+            set => _tag = value;
         }
 
 

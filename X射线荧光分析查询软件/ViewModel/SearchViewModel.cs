@@ -8,35 +8,25 @@
 
     public class SearchViewModel : ViewModelBase
     {
-        private INavigationService Nav => ServiceLocator.Current.GetInstance<INavigationService>();
+        private readonly INavigationService _nav = ServiceLocator.Current.GetInstance<INavigationService>();
 
-        private string _QueryString = "";
-        private string _Tip = "原子序数";
+        private string _queryString = "";
         private string _视图 = "列表";
         private int _分类 = 0;
 
-        private RelayCommand _QueryCommand;
+        private RelayCommand _queryCommand;
 
         /// <summary>
         /// 文本框中的文本
         /// </summary>
         public string QueryString
         {
-            get { return _QueryString; }
+            get => _queryString;
             set
             {
-                Set(ref _QueryString, value);
+                Set(ref _queryString, value);
                 Query();
             }
-        }
-
-        /// <summary>
-        /// Tip，已废弃
-        /// </summary>
-        public string Tip
-        {
-            get { return _Tip; }
-            private set { Set(ref _Tip, value); }
         }
 
         /// <summary>
@@ -44,39 +34,12 @@
         /// </summary>
         public int 分类
         {
-            get { return _分类; }
+            get => _分类;
             set
             {
                 Set(ref _分类, value);
                 // 2017.07.14 新增
                 QueryString = string.Empty;
-                /*
-                switch (value)
-                {
-                    case 0:
-                        {
-                            Tip = "原子序数";
-                            break;
-                        }
-                    case 1:
-                        {
-                            Tip = "元素名称";
-                            break;
-                        }
-                    case 2:
-                        {
-                            Tip = "元素符号";
-                            break;
-                        }
-                    case 3:
-                        {
-                            Tip = "能量";
-                            break;
-                        }
-                    default:
-                        break;
-                }
-                */
             }
         }
 
@@ -85,7 +48,7 @@
         /// </summary>
         public string 视图
         {
-            get { return _视图; }
+            get => _视图;
             set
             {
                 Navigation(value);
@@ -93,19 +56,14 @@
             }
         }
 
-        public RelayCommand QueryCommand => _QueryCommand ?? (_QueryCommand = new RelayCommand(Query));
-
-        public SearchViewModel()
-        {
-            //
-        }
+        public RelayCommand QueryCommand => _queryCommand ?? (_queryCommand = new RelayCommand(Query));
 
         /// <summary>
         /// 发送查询命令和信息
         /// </summary>
         private void Query()
         {
-            Messenger.Default.Send(new NotificationMessage<int>(_分类, _QueryString), ScreenViewModel.QueryToken);
+            Messenger.Default.Send(new NotificationMessage<int>(_分类, _queryString), ScreenViewModel.QueryToken);
             // Messenger.Default.Send(true, View.MainWindow.LayoutToken);
         }
 
@@ -117,25 +75,24 @@
         {
             if (!_视图.Equals(value))
             {
-                if ("列表".Equals(value))
+                switch (value)
                 {
-                    if (nameof(View.列表视图).Equals(Nav.CurrentPageKey))
-                    {
+                    case "列表":
+                        if (nameof(View.列表视图).Equals(_nav.CurrentPageKey))
+                        {
+                            return;
+                        }
+                        _nav.NavigateTo(nameof(View.列表视图));
+                        break;
+                    case "表格":
+                        if (nameof(View.表格视图).Equals(_nav.CurrentPageKey))
+                        {
+                            return;
+                        }
+                        _nav.NavigateTo(nameof(View.表格视图));
+                        break;
+                    default:
                         return;
-                    }
-                    Nav.NavigateTo(nameof(View.列表视图));
-                }
-                else if ("表格".Equals(value))
-                {
-                    if (nameof(View.表格视图).Equals(Nav.CurrentPageKey))
-                    {
-                        return;
-                    }
-                    Nav.NavigateTo(nameof(View.表格视图));
-                }
-                else
-                {
-                    return;
                 }
             }
         }

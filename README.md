@@ -9,8 +9,8 @@
 ## 更新
 
 - 2017.10.31 更新
-  
-  syntax fixed
+
+  syntax fixed
 
 - 2017.10.12 更新
 

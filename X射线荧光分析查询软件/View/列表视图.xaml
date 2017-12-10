@@ -84,6 +84,18 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="ToolTip">
+                <Setter.Value>
+                    <ToolTip>
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="{Binding 序数}" />
+                            <TextBlock Text=" - " />
+                            <TextBlock Text="{Binding 名称}" />
+                        </StackPanel>
+                    </ToolTip>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Page.Resources>
 

@@ -8,6 +8,12 @@
 
 ## 更新
 
+- 2017.12.10 更新
+
+  更新SQLite.Core到1.0.106.0
+  
+  添加了ListViewItem的ToolTip
+
 - 2017.10.31 更新
 
   syntax fixed

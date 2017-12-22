@@ -7,7 +7,7 @@
     /// <summary>
     /// 关于.xaml 的交互逻辑
     /// </summary>
-    public partial class 关于 : Window
+    public partial class 关于
     {
         private RelayCommand _closeCommand;
 
@@ -23,12 +23,12 @@
         private void GetVersion()
         {
             Version ver = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            version.Text = $"{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}";
+            AppVersion.Text = $"v{ver.Major}.{ver.Minor}.{ver.Build}.{ver.Revision}";
         }
 
         private void CloseWindow()
         {
-            this.Close();
+            Close();
         }
 
         private void Hyperlink_Click(object s, RoutedEventArgs e)

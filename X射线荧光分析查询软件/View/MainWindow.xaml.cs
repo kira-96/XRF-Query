@@ -45,13 +45,26 @@
             Unloaded += (s, e) => Messenger.Default.Unregister<bool>(this, LayoutToken);
         }
 
-        private void OnMouseDown(object s, MouseButtonEventArgs e)
+        private void OnMouseLeftDown(object s, MouseButtonEventArgs e)
         {
+            if (e.ClickCount == 2)
+            {
+                if (_isMaximize)
+                {
+                    RestoreWindow(_restoreRect.X, _restoreRect.Y);
+                }
+                else
+                {
+                    MaximizeWindow();
+                }
+                e.Handled = true;
+                return;
+            }
             if (!_isMaximize && e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
+                e.Handled = true;
             }
-            e.Handled = true;
         }
 
         /// <summary>
@@ -76,6 +89,12 @@
 
         private void Window_SizeChanged(object s, SizeChangedEventArgs e)
         {
+            if (WindowState == WindowState.Maximized)
+            {
+                WindowState = WindowState.Normal;
+                MaximizeWindow();
+                return;
+            }
             Rect rect = new Rect(e.NewSize);
             RectangleGeometry rg = new RectangleGeometry(rect, 6, 6);
             ((UIElement) s).Clip = rg;

@@ -107,7 +107,7 @@
             <RowDefinition x:Name="Row1" Height="Auto" />
             <RowDefinition x:Name="Row2" Height="*" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" MouseDown="OnMouseDown">
+        <Grid Grid.Row="0" MouseLeftButtonDown="OnMouseLeftDown">
             <Grid.Background>
                 <ImageBrush ImageSource="../Resources/back.png" Stretch="UniformToFill" />
             </Grid.Background>

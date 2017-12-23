@@ -130,7 +130,7 @@
             Width = SystemParameters.WorkArea.Width;
             Height = SystemParameters.WorkArea.Height;
             _isMaximize = true;
-            最大化.Content = "\xE92C";
+            最大化.Content = "\xF066";
             最大化.ToolTip = "还原";
         }
 
@@ -141,7 +141,7 @@
             Width = _restoreRect.Width;
             Height = _restoreRect.Height;
             _isMaximize = false;
-            最大化.Content = "\xE92D";
+            最大化.Content = "\xF065";
             最大化.ToolTip = "最大化";
         }
 

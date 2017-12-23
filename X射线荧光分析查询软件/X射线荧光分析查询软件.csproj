@@ -246,8 +246,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Resource Include="Resources\FontAwesome.otf" />
     <None Include="X射线荧光分析查询软件_TemporaryKey.pfx" />
-    <Resource Include="Resources\Segoe MDL2 Assets.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -22,21 +22,21 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Skins/MainSkin.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="关闭按钮" TargetType="{x:Type Button}" BasedOn="{StaticResource Segoe}">
+            <Style x:Key="关闭按钮" TargetType="{x:Type Button}" BasedOn="{StaticResource FontAwesome}">
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Foreground" Value="Gray" />
-                <Setter Property="FontSize" Value="12" />
-                <Setter Property="Width" Value="20" />
-                <Setter Property="Height" Value="20" />
-                <Setter Property="Margin" Value="3 0" />
+                <Setter Property="Foreground" Value="LightGray" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Width" Value="22" />
+                <Setter Property="Height" Value="22" />
+                <Setter Property="Margin" Value="2 0" />
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Border x:Name="BackBorder" CornerRadius="3" 
-                                    Width="18" Height="18"
+                                    Width="22" Height="22"
                                     Background="Transparent" BorderThickness="0">
                                 <ContentPresenter Content="{TemplateBinding Content}"
                                           HorizontalAlignment="Center"
@@ -58,14 +58,14 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            <Style x:Key="透明按钮" TargetType="{x:Type Button}" BasedOn="{StaticResource Segoe}">
+            <Style x:Key="透明按钮" TargetType="{x:Type Button}" BasedOn="{StaticResource FontAwesome}">
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Foreground" Value="Gray" />
-                <Setter Property="FontSize" Value="12" />
-                <Setter Property="Width" Value="20" />
-                <Setter Property="Height" Value="20" />
-                <Setter Property="Margin" Value="3 0" />
+                <Setter Property="Foreground" Value="LightGray" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Width" Value="22" />
+                <Setter Property="Height" Value="22" />
+                <Setter Property="Margin" Value="2 0" />
                 <Setter Property="Cursor" Value="Hand" />
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Template">
@@ -78,10 +78,10 @@
 
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Foreground" Value="White" />
+                                    <Setter Property="Foreground" Value="LightSkyBlue"/>
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
-                                    <Setter Property="Foreground" Value="WhiteSmoke" />
+                                    <Setter Property="Foreground" Value="LightSalmon" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -116,10 +116,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="关于" ToolTip="关于" Content="&#xE11B;" Style="{StaticResource 透明按钮}" Click="关于_Click" />
-                <Button x:Name="最小化" ToolTip="最小化" Content="&#xE921;" Style="{StaticResource 透明按钮}" Click="最小化_Click" />
-                <Button x:Name="最大化" ToolTip="最大化" Content="&#xE92D;" Style="{StaticResource 透明按钮}" Click="最大化_Click" />
-                <Button x:Name="关闭" ToolTip="关闭" Content="&#xE8BB;" Style="{StaticResource 关闭按钮}" Click="关闭_Click" />
+                <Button x:Name="关于" ToolTip="关于" Content="&#xF05A;" Style="{StaticResource 透明按钮}" Click="关于_Click" />
+                <Button x:Name="最小化" ToolTip="最小化" Content="&#xF2D1;" Style="{StaticResource 透明按钮}" Click="最小化_Click" />
+                <Button x:Name="最大化" ToolTip="最大化" Content="&#xF065;" Style="{StaticResource 透明按钮}" Click="最大化_Click" />
+                <Button x:Name="关闭" ToolTip="关闭" Content="&#xF00D;" Style="{StaticResource 关闭按钮}" Click="关闭_Click" />
             </StackPanel>
             <Frame Grid.Row="1" 
                    x:Name="SearchPage" 

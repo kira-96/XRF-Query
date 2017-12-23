@@ -9,12 +9,12 @@
       DataContext="{Binding Source={StaticResource Locator}, Path=Screen}">
 
     <Page.Resources>
-        <Style x:Key="TransButton" TargetType="{x:Type Button}" BasedOn="{StaticResource Segoe}">
+        <Style x:Key="TransButton" TargetType="{x:Type Button}" BasedOn="{StaticResource FontAwesome}">
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="Black" />
             <Setter Property="FontSize" Value="24" />
-            <Setter Property="Margin" Value="6 0" />
+            <Setter Property="Margin" Value="2 0" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Template">
@@ -49,11 +49,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="&#xE1C7;" 
+            <Button Content="&#xF196;" 
                     Command="{Binding SizeUpCommand}"
                     Style="{StaticResource TransButton}" 
                     ToolTip="字体+" />
-            <Button Content="&#xE1C6;" 
+            <Button Content="&#xF147;" 
                     Command="{Binding SizeDownCommand}"
                     Style="{StaticResource TransButton}" 
                     ToolTip="字体-" />

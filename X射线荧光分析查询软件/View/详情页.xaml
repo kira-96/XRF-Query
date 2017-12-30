@@ -21,11 +21,11 @@
             <Setter Property="BorderBrush" Value="Black" />
             <Setter Property="BorderThickness" Value="1" />
         </Style>
-        <Style x:Key="TransButton" TargetType="{x:Type Button}" BasedOn="{StaticResource Segoe}">
+        <Style x:Key="TransButton" TargetType="{x:Type Button}" BasedOn="{StaticResource FontAwesome}">
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="#00BFFF" />
-            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontSize" Value="28" />
             <Setter Property="Margin" Value="6 0" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -58,7 +58,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Margin="5">
-            <Button Content="&#xE112;" 
+            <Button Content="&#xF060;" 
                     HorizontalAlignment="Left" 
                     ToolTip="返回"
                     Command="{Binding BackCommand}"

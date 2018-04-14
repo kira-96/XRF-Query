@@ -1,12 +1,19 @@
 # XRF-Query
-## 一个简单的查询数据库的小程序。
-
+`一个简单的查询数据库的小程序。`
+---
 - WPF框架
 - MVVM风格
 - SQLite3数据库
 - 通过LINQ to SQL方式来筛选数据
-
+---
 ## 更新
+
+- 2018.01.14 更新
+
+  更新mvvmlight版本到v5.4.1，支持CommonServiceLocator  
+  更新CommonServiceLocator至2.01  
+  更新SQLite.Core到1.0.108.0  
+  移除无用代码
 
 - 2017.12.23 更新
   

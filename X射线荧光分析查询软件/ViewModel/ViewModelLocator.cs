@@ -13,10 +13,9 @@ namespace X射线荧光分析查询软件.ViewModel
 {
     using CommonServiceLocator;
     using GalaSoft.MvvmLight;
-    // using GalaSoft.MvvmLight.Ioc;
+    using GalaSoft.MvvmLight.Ioc;
     using GalaSoft.MvvmLight.Views;
     using System;
-    using IoC;
     using Model;
     using Service;
     using View;
@@ -32,24 +31,23 @@ namespace X射线荧光分析查询软件.ViewModel
     {
         static ViewModelLocator()
         {
-            // ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-            ServiceLocator.SetLocatorProvider(() => IoC.Default);
+            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             if (ViewModelBase.IsInDesignModeStatic)
             {
-                IoC.Default.Register<IDataService, Design.DesignDataService>();
+                SimpleIoc.Default.Register<IDataService, Design.DesignDataService>();
             }
             else
             {
-                IoC.Default.Register<IDataService, DataService>();
+                SimpleIoc.Default.Register<IDataService, DataService>();
             }
 
             // SimpleIoc.Default.Register<MainViewModel>();
-            IoC.Default.Register<MainViewModel>();
-            IoC.Default.Register<SearchViewModel>();
-            IoC.Default.Register<ScreenViewModel>();
-            IoC.Default.Register(() => InitNavigationService());
-            IoC.Default.Register<IDialogService, DialogService>();
+            SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<SearchViewModel>();
+            SimpleIoc.Default.Register<ScreenViewModel>();
+            SimpleIoc.Default.Register(() => InitNavigationService());
+            SimpleIoc.Default.Register<IDialogService, DialogService>();
         }
 
         private static INavigationService InitNavigationService()

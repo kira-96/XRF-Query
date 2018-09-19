@@ -8,10 +8,10 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("X射线荧光分析查询软件")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("杨峥翰-大三下学期的课程设计软件")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("X射线荧光分析查询软件")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("CDUT")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -53,3 +53,5 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.6.1")]
 [assembly: AssemblyFileVersion("1.0.6.1")]
+[assembly: NeutralResourcesLanguage("zh-CN")]
+

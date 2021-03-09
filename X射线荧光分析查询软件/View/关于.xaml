@@ -27,10 +27,10 @@
                        FontSize="18" Margin="6" 
                        TextDecorations="Underline" />
             <TextBlock x:Name="SourceUri" FontSize="13" Margin="12 2">
-                <Hyperlink NavigateUri="https://github.com/KKKKKKi/XRF-Query" 
+                <Hyperlink NavigateUri="https://github.com/kira-96/XRF-Query" 
                            ToolTip="转到" TextDecorations="{x:Null}"
                            Click="Hyperlink_Click">
-                    https://github.com/KKKKKKi/XRF-Query
+                    https://github.com/kira-96/XRF-Query
                 </Hyperlink>
             </TextBlock>
             <TextBlock Text="程序版本" Foreground="DarkTurquoise" FontSize="18" Margin="6" />
